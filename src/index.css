@@ -2,41 +2,56 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Restaurant Glassmorphism Design System */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Glassmorphism Color Palette */
+    --background: 260 100% 97%;
+    --foreground: 260 15% 8%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100% / 0.1;
+    --card-foreground: 260 15% 8%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100% / 0.95;
+    --popover-foreground: 260 15% 8%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 280 100% 70%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 200 100% 70%;
+    --secondary-foreground: 260 15% 8%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 260 20% 96% / 0.5;
+    --muted-foreground: 260 15% 45%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 320 100% 75%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 0 0% 100% / 0.2;
+    --input: 0 0% 100% / 0.1;
+    --ring: 280 100% 70%;
 
-    --radius: 0.5rem;
+    --radius: 1rem;
+
+    /* Custom Glassmorphism Variables */
+    --glass-bg: 255 255 255 / 0.1;
+    --glass-border: 255 255 255 / 0.2;
+    --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    
+    /* Gradient Backgrounds */
+    --gradient-primary: linear-gradient(135deg, hsl(280 100% 70% / 0.8), hsl(320 100% 75% / 0.8));
+    --gradient-secondary: linear-gradient(135deg, hsl(200 100% 70% / 0.8), hsl(260 100% 80% / 0.8));
+    --gradient-accent: linear-gradient(135deg, hsl(45 100% 70% / 0.8), hsl(320 100% 75% / 0.8));
+    --gradient-bg: linear-gradient(135deg, hsl(260 100% 97%), hsl(280 100% 95%), hsl(320 100% 97%));
+    
+    /* Animation Variables */
+    --transition-glass: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --backdrop-blur: blur(20px);
+    --backdrop-blur-sm: blur(10px);
 
     --sidebar-background: 0 0% 98%;
 
@@ -101,5 +116,71 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    background: var(--gradient-bg);
+    min-height: 100vh;
+  }
+}
+
+@layer utilities {
+  /* Glassmorphism Effects */
+  .glass {
+    background: rgba(var(--glass-bg));
+    backdrop-filter: var(--backdrop-blur);
+    -webkit-backdrop-filter: var(--backdrop-blur);
+    border: 1px solid rgba(var(--glass-border));
+    box-shadow: var(--glass-shadow);
+    transition: var(--transition-glass);
+  }
+  
+  .glass-sm {
+    background: rgba(var(--glass-bg));
+    backdrop-filter: var(--backdrop-blur-sm);
+    -webkit-backdrop-filter: var(--backdrop-blur-sm);
+    border: 1px solid rgba(var(--glass-border));
+    transition: var(--transition-glass);
+  }
+  
+  .glass-hover:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.5);
+  }
+  
+  .gradient-primary {
+    background: var(--gradient-primary);
+  }
+  
+  .gradient-secondary {
+    background: var(--gradient-secondary);
+  }
+  
+  .gradient-accent {
+    background: var(--gradient-accent);
+  }
+  
+  /* Custom Animations */
+  .float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  .pulse-glow {
+    animation: pulse-glow 2s infinite;
+  }
+  
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+  }
+  
+  @keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 20px rgba(280, 100%, 70%, 0.3); }
+    50% { box-shadow: 0 0 30px rgba(280, 100%, 70%, 0.6); }
+  }
+  
+  .text-gradient {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 }
